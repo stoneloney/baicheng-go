@@ -1,0 +1,84 @@
+{{define "admin/index"}}
+{{template "admin/header" .}}
+<body data-type="generalComponents">
+    {{template "admin/nav" .}}
+    <div class="tpl-page-container tpl-page-header-fixed">
+        {{template "admin/sidenav" .}}
+        <div class="tpl-content-wrapper">
+            <div class="tpl-portlet-components">
+                <div class="portlet-title">
+                    <div class="caption font-green bold">
+                        <span class="am-icon-code"></span> 最近{{.days}}天数据量
+                    </div>
+                </div>
+                <div class="tpl-block">
+                    <div class="tpl-echarts tpl-chart-mb" id="tpl-echarts-A"></div>
+                </div>
+                <div class="tpl-alert"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/amazeui.min.js"></script>
+    <script src="/public/js/echarts.min.js"></script>
+    <script>
+    	var echartsA = echarts.init(document.getElementById('tpl-echarts-A'));
+        option = {
+            tooltip: {
+                trigger: 'axis',
+            },
+            legend: {
+                data: ['估价数', '订制数']
+            },
+            grid: {
+                //left: '0%',
+                //right: '0%',
+                //bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                data: {{.dates}},
+            }],
+            yAxis: [{
+                type: 'value',
+               
+            }],
+            series: [
+                  {
+                    name: '订制数',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: { normal: {} },
+                    data: {{.madeNumbers}},
+                    itemStyle: {
+                        normal: {
+                            color: '#e7505a'
+                        }
+                    }
+                 },
+                 {
+                    name: '估价数',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: { normal: {} },
+                    data: {{.numbers}},
+                    itemStyle: {
+                        normal: {
+                            color: '#59aea2'
+                        },
+                        emphasis: {
+
+                        }
+                    }
+                },
+            ]
+        };
+        echartsA.setOption(option);
+
+    </script>
+</body>
+	
+</html>
+{{end}}

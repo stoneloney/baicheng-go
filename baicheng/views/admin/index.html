@@ -1,0 +1,26 @@
+{{define "admin/index"}}
+{{template "admin/header" .}}
+<body data-type="generalComponents">
+    {{template "admin/nav" .}}
+    <div class="tpl-page-container tpl-page-header-fixed">
+        {{template "admin/sidenav" .}}
+        <div class="tpl-content-wrapper">
+            <div class="tpl-portlet-components">
+                <div class="portlet-title">
+                    <div class="caption font-green bold">
+                        <span class="am-icon-code"></span> 最近{{.days}}天数据量
+                    </div>
+                </div>
+                <div class="tpl-block">
+                    <div class="tpl-echarts tpl-chart-mb" id="tpl-echarts-A"></div>
+                </div>
+                <div class="tpl-alert"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/amazeui.min.js"></script>     
+</body>
+	
+</html>
+{{end}}

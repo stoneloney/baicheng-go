@@ -1,0 +1,69 @@
+{
+    "debug": {
+    	"public": "public",
+    	"database": {
+    		"host": "127.0.0.1",
+    		"name": "baicheng",
+    		"user": "root",
+    		"password": "jia119110",
+    		"charset": "utf8",
+    		"port": "3306"
+    	},
+        "redis": {
+            "host": "127.0.0.1",
+            "port": "6379",
+            "password": "jia110119",
+            "prekey": "bc_"
+        },
+        "image": {
+            "maxsize": 1024000,
+            "isthumb": 1,
+            "thumbwidth": 150,
+            "thumbheight": 150,
+            "path": "upload"
+        },
+        "sms": {
+            "tplid": 240735,
+            "smslength": 4,
+            "expire": 30
+        },
+    	"svr_port": "9090",
+        "sessionid": "baicheng",
+    	"session_secret": "baicheng_sess_secret",
+        "admin_path": "baichengadmin"
+    },
+    "release": {
+       "public": "public",
+       "database": {
+    		"host": "127.0.0.1",
+    		"name": "baicheng",
+    		"user": "root",
+    		"password": "jia119110",
+    		"charset": "utf8",
+    		"port": "3306"
+    	},
+        "redis": {
+            "host": "127.0.0.1",
+            "port": "6379",
+            "password": "jia110119",
+            "prekey": "bc_"
+        },
+        "image": {
+            "maxsize": 1024000,
+            "isthumb": 1,
+            "thumbwidth": 150,
+            "thumbheight": 150,
+            "path": "upload"
+        },
+        "sms": {
+            "tplid": 240735,
+            "smslength": 4,
+            "expire": 30
+        },
+        "sessionid": "baicheng",
+    	"svr_port": "9090",
+    	"session_secret": "baicheng_sess_secret",
+        "admin_path": "baichengadmin"
+    },
+    "env": "debug"
+}

@@ -1,0 +1,41 @@
+{{define "admin/sidenav"}}
+<div class="tpl-left-nav tpl-left-nav-hover">
+    <div class="tpl-left-nav-title">
+        管理列表
+    </div>
+    <div class="tpl-left-nav-list">
+        <ul class="tpl-left-nav-menu">
+            <li class="tpl-left-nav-item">
+                <a href="/adm" class='nav-link {{isActiveLink .Context "/"}}'>
+                    <i class="am-icon-home"></i>
+                    <span>首页</span>
+                </a>
+            </li>
+            <li class="tpl-left-nav-item">
+                <a href="/adm/data" class='nav-link {{isActiveLink .Context "data"}}'>
+                    <i class="am-icon-bar-chart"></i>
+                    <span>询价列表</span>
+                </a>
+            </li>
+             <li class="tpl-left-nav-item">
+                <a href="/adm/made" class='nav-link {{isActiveLink .Context "made"}}'>
+                    <i class="am-icon-bar-chart"></i>
+                    <span>定制列表</span>
+                </a>
+            </li>
+            <li class="tpl-left-nav-item">
+                <a href="/adm/users" class='nav-link {{isActiveLink .Context "users"}}'>
+                    <i class="am-icon-wpforms"></i>
+                    <span>用户表</span>
+                </a>
+            </li>
+             <li class="tpl-left-nav-item">
+                <a href="/adm/sms" class='nav-link {{isActiveLink .Context "sms"}}'>
+                    <i class="am-icon-wpforms"></i>
+                    <span>短息列表</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{{end}}

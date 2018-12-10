@@ -1,0 +1,55 @@
+{
+    "debug": {
+    	"public": "public",
+    	"database": {
+    		"host": "127.0.0.1",
+    		"name": "mangdian",
+    		"user": "root",
+    		"password": "jia119110",
+    		"charset": "utf8",
+    		"port": "3306"
+    	},
+        "redis": {
+            "host": "127.0.0.1",
+            "port": "6379",
+            "password": "jia110119",
+            "prekey": "md_"
+        },
+        "sms": {
+            "tplid": 240735,
+            "smslength": 4,
+            "expire": 30
+        },
+    	"svr_port": "9090",
+        "sessionid": "mangdian",
+    	"session_secret": "mangdian_sess_secret",
+        "admin_path": "mangdianadmin"
+    },
+    "release": {
+       "public": "public",
+       "database": {
+    		"host": "127.0.0.1",
+    		"name": "mangdian",
+    		"user": "root",
+    		"password": "jia119110",
+    		"charset": "utf8",
+    		"port": "3306"
+    	},
+        "redis": {
+            "host": "127.0.0.1",
+            "port": "6379",
+            "password": "jia110119",
+            "prekey": "md_"
+        },
+        "sms": {
+            "tplid": 240735,
+            "smslength": 4,
+            "expire": 30
+        },
+    	"svr_port": "20000",
+    	"sessionid": "mangdian",
+        "session_secret": "mangdian_sess_secret",
+        "admin_path": "mangdianadmin"
+    },
+    "env": "debug"
+}
