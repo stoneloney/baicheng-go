@@ -1,0 +1,58 @@
+/**
+定时任务实例
+每隔5秒执行一次：*/5 * * * * ?
+每隔1分钟执行一次：0 */1 * * * ?
+每天23点执行一次：0 0 23 * * ?
+每天凌晨1点执行一次：0 0 1 * * ?
+每月1号凌晨1点执行一次：0 0 1 1 * ?
+每月最后一天23点执行一次：0 0 23 L * ?
+每周星期天凌晨1点实行一次：0 0 1 ? * L
+在26分、29分、33分执行一次：0 26,29,33 * * * ?
+每天的0点、13点、18点、21点都执行一次：0 0 0,13,18,21 * * ?
+*/
+
+//
+日期	星期	上班	下班	上班	下班	加班上	加班下	平时加班	周末加班	节日加班	正班工时	出勤天数	迟到分钟	早退分钟	旷工	请假类型	请假小时
+2019-02-18	星期一	07:52			17:12			1	0	0	8	1	0	0	0		0	2019-02-19	星期二	07:52	07:52	07:52	17:12			0	0	0	8	1	0	0	0		0	2019-02-20	星期三	07:52	07:52	07:52	17:12	18:00	21:00	3	8	1	8	1	0	0	0		0	--- PASS: TestNewDep (0.64s)
+
+
+
+
+// 部门列表
+TYPECODE	DEPARTMENTCODE	DEPARTMENTNAME	rootname
+            01	财务部	财务部
+            02	人事部	人事部
+            03	生产部	生产部
+            0301	一车间	生产部\一车间
+            0302	二车间	生产部\二车间	datang
+            04	TEEE	TEEE	datang
+            05	钉钉部门1	钉钉部门1	datang
+            06	钉钉部门2	钉钉部门2	datang
+            0601	钉钉部门2_1	钉钉部门2\钉钉部门2_1	datang
+            0602	钉钉部门2_2	钉钉部门2\钉钉部门2_2	datang
+07	ch555	ch555	datang	1	ch1	ch1	datang	2	cs1	cs1	datang	08	cs22	cs22	datang	09	cs3	cs3	datang	10	cs4	cs4	datang	1001	cs41	cs41	datang	1002	cs42	cs42	datang	1003	cs43	cs43	datang	12	cs1	cs1	datang	0701	ch11	ch11		13	T11-01	T11-01	datang	14	T12新增测试	T12新增测试	datang	16	DD16	DD16	datang	15	T12新增测试	T12新增测试	datang
+1601	DD1601	DD16\DD1601	datang
+17	DD16	DD16	datang	11	cs2	cs2	--- PASS: TestNewDep (1.12s)
+
+//
+月份	     项目2  	项目3	实际底薪	应出勤天数	岗位标准	底薪标准	奖金	扣伙食	应付合计     	应扣合计	实发金额
+2019-07	 62.83	 20	      0	      0	         1000	3000	0	0	  182.82999999999998	0	  180
+--- PASS: TestNewDep (0.59s)
+
+
+
+timelayout1 := "2006-01-02"
+timelayout2 := "15:04"
+recordTimeInt, _ := strconv.ParseInt(recordTime, 10, 64)
+timeint := int64(recordTimeInt/1000)
+fmt.Println(timeint)
+tu := time.Unix(timeint, 0)
+
+
+
+
+he_time, err := time.Parse("2006-01-02 15:04:05", "2014-01-08 09:04:41")
+if err == nil {
+    unix_time := the_time.Unix()
+    fmt.Println(unix_time)
+}

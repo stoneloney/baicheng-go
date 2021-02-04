@@ -1,0 +1,43 @@
+{
+  "dingding": {
+    "appkey": "dingebpo4jkck8mkkbeb",
+    "appsecret": "BgoAD74YRu-lxS-US4NVNXMRcuQ5f9nH5FsaJEwDe7CD7PG5oZMwm_OVTw9c30T-",
+    "token": "123456",
+    "aeskey": "1234567890123456789012345678901234567890123",
+    "corpid": "ding02634a50287cf0f835c2f4657eb6378f",
+    "callback": "http://2g399409j8.zicp.vip:23284/dingding/callback",
+    "agentid": "258516747"
+  },
+  "cron": {
+    "department": "0 46 * * *",
+    "user": "0 48 */1 * *",
+    "pushWage": "0 0 12 12 * *",
+    "record": [
+      "0 28 11 * *",
+      "0 9 18 * *",
+      "0 35 10 * *"
+    ],
+    "specify_record": [
+      {
+        "run": true,
+        "cron": "0 1 * * *",
+        "start_date": "2020-05-15 00:00:00",
+        "end_date": "2020-05-16 23:59:50"
+      }
+    ],
+    "userid_by_Phone": [
+      "0 58 14 * *",
+      "0 40 12 * *",
+      "0 43 12 * *",
+      "0 54 14 * *",
+      "0 50 1 * *"
+    ]
+  },
+  "database": {
+    "host": "2g399409j8.zicp.vip",
+    "user": "sa",
+    "password": "123",
+    "port": 23284,
+    "name": "topHR"
+  }
+}
