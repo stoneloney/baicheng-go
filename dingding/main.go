@@ -156,6 +156,16 @@ func main() {
 			}
 		}
 
+		// 审批数据同步
+		processinstance := controllers.Cfg.Cron.Processinstance
+		if processinstance.Run && len(processinstance.Crontab) > 0 {
+			processinstanceTimer := processinstance.Crontab
+			_ = cr.AddFunc(processinstanceTimer, func() {
+				controllers.SyncProcessinstance("111", 222, 0)
+			})
+		}
+
+
 		cr.Start()
 	}()
 

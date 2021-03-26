@@ -6,9 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"path"
-	"path/filepath"
 	"runtime"
 	"runtime/debug"
 )
@@ -41,6 +39,10 @@ type Config struct {
 			StartDate string `json:"start_date"`
 			EndDate   string `json:"end_date"`
 		} `json:"specify_record"`
+		Processinstance struct {
+			Run      bool    `json:"run"`
+			Crontab  string  `json:"crontab"`
+		} `json:processinstance`
 		UseridByPhone []string `json:"userid_by_Phone"`
 	} `json:"cron"`
 	Env string `json:"env"`
@@ -58,16 +60,16 @@ func LoadConfig() {
 	//gopath := os.Getenv("GOPATH")
 
 	// windows
+	/*
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		panic(err)
 	}
+	 */
 
 	//  mac
-	/*
 	gopath := "/Users/stone/go"
 	dir := fmt.Sprintf("%s/%s/%s", gopath, "src", "dingding")
-	*/
 	//dir := getCurrentPath()
 
 	envPath := fmt.Sprintf("%s/%s", dir, "config/env.json")

@@ -108,7 +108,7 @@ type Record struct {
 	BaseCheckTime  int64  `json:"baseCheckTime"` // 计算迟到和早退，基准时间
 	UserCheckTime  int64  `json:"userCheckTime"` // 实际打卡时间,  用户打卡时间的毫秒数
 	SourceType     string `json:"sourceType"`
-	UserAddress    string `json:"userAddress"`   // 打开地址
+	UserAddress    string `json:"userAddress"` // 打开地址
 }
 
 // 打卡结果(简版)
@@ -198,6 +198,17 @@ type CallbackMsgStruct struct {
 	Remark            string `json:"remark"`
 }
 
+// 审批列表
+type ProcessInstanceListStruct struct {
+	Result struct {
+		List       []string `json:"list"`
+		NextCursor int64    `json:"next_cursor"`
+	} `json:"result"`
+	Errcode   int    `json:"errcode"`
+	ErrMsg    string `json:"errmsg"`
+	RequestId string `json:"request_id"`
+}
+
 // 审批实例
 type ProcessInstanceStruct struct {
 	Errcode         int    `json:"errcode"`
@@ -261,21 +272,21 @@ type DepartmentInfoStruct struct {
 
 // 手机号
 type PhoneStruct struct {
-	Phone  uint64   `sql:"phone"`
+	Phone uint64 `sql:"phone"`
 }
 
 // 用户userid
 type UseridStruct struct {
-	ErrCode     int     `json:"errcode"`
-	ErrMsg      string  `json:"errmsg"`
-	Userid      string  `json:"userid"`
+	ErrCode int    `json:"errcode"`
+	ErrMsg  string `json:"errmsg"`
+	Userid  string `json:"userid"`
 }
 
 type NewComponentValues struct {
-	ComponentName   string  `json:"component_name"`
-	ComponentType   string  `json:"component_type"`
-	Props  struct {
-		BizAlias  string  `json:"bizAlias"`
+	ComponentName string `json:"component_name"`
+	ComponentType string `json:"component_type"`
+	Props         struct {
+		BizAlias string `json:"bizAlias"`
 	} `json:"props"`
-	Value  string  `json:"value"`
+	Value string `json:"value"`
 }

@@ -350,6 +350,18 @@ func Test_overtime2(t *testing.T) {
 	}
 }
 
+// 同步审批数据
+func Test_SyncProcessinstance(t *testing.T) {
+	//processCode := "PROC-AB569F86-04ED-4C55-8455-030CCA8727BB"   // 请假
+	//processCode := "PROC-D575CEAE-9359-4A8A-B020-45EA6905454A"   // 加班
+	processCode := "PROC-728AECBB-4AD7-484D-A970-E32E50A8F2A3"   // 补卡
+
+	timestamp := time.Now().Unix() - 3600
+
+	controllers.SyncProcessinstance(processCode, uint64(timestamp)*1000, 0)
+
+}
+
 // 包含测试
 func Test_index(t *testing.T) {
 	str := "xx提交的加班"

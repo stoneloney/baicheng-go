@@ -11,21 +11,23 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
 var APPKEY, APPSECRET string
 
 var Ncrypto *Crypto
+var cacheSyncMap sync.Map
 
 const (
-	DepartmentURL = "https://oapi.dingtalk.com/department"                    // 部门url前缀
-	UserUrl       = "https://oapi.dingtalk.com/user"                          // 用户url前缀
-	AttendanceUrl = "https://oapi.dingtalk.com/attendance"                    // 考勤url前缀
-	SmartworkUrl  = "https://oapi.dingtalk.com/topapi/smartwork/hrm/employee" // 智能人事
-	CallbackUrl   = "https://oapi.dingtalk.com/call_back"                     // 事件回调
-	ProcessUrl    = "https://oapi.dingtalk.com/topapi/processinstance"        // 审批实例详情
-	PushUrl       = "https://oapi.dingtalk.com/topapi/message/corpconversation/"  // 信息推送
+	DepartmentURL      = "https://oapi.dingtalk.com/department"                       // 部门url前缀
+	UserUrl            = "https://oapi.dingtalk.com/user"                             // 用户url前缀
+	AttendanceUrl      = "https://oapi.dingtalk.com/attendance"                       // 考勤url前缀
+	SmartworkUrl       = "https://oapi.dingtalk.com/topapi/smartwork/hrm/employee"    // 智能人事
+	CallbackUrl        = "https://oapi.dingtalk.com/call_back"                        // 事件回调
+	ProcessUrl         = "https://oapi.dingtalk.com/topapi/processinstance"           // 审批实例详情
+	PushUrl            = "https://oapi.dingtalk.com/topapi/message/corpconversation/" // 信息推送
 )
 
 /*
@@ -218,19 +220,21 @@ func insertOvertimneToHrV2(pid string) {
 				// 查找数据
 				for _, v := range cvRes {
 					switch v.Props.BizAlias {
-					case "startTime":{
-						startTIme = v.Value
-					}
-					case "finishTime":{
-						endTIme = v.Value
-					}
-					case "duration":{
-						duration = v.Value
-					}
+					case "startTime":
+						{
+							startTIme = v.Value
+						}
+					case "finishTime":
+						{
+							endTIme = v.Value
+						}
+					case "duration":
+						{
+							duration = v.Value
+						}
 
 					}
 				}
-
 
 				originatorUserid := processInstance.OriginatorUserid // 发起人
 
@@ -1018,8 +1022,8 @@ func UserDel(userid string) (int, error) {
 }
 
 /**
-   钉钉根据用户手机号获取userId
- */
+  钉钉根据用户手机号获取userId
+*/
 func getDDUserIdByPhone(phone uint64) (string, error) {
 	token, err := getAccessToken()
 	if err != nil {
@@ -1041,8 +1045,6 @@ func getDDUserIdByPhone(phone uint64) (string, error) {
 	}
 
 	return res.Userid, nil
-
-
 
 }
 
@@ -1168,7 +1170,6 @@ func AttendanceList(userids []string, startdate string, enddate string) (int, []
 	return res.ErrCode, res.Recordresult, nil
 }
 
-
 /**
   钉钉获取用户打卡结果 (包含多次打卡记录)
   @params userid    用户列表
@@ -1208,7 +1209,6 @@ func AttendanceRecordList(userids []string, startdate string, enddate string) (i
 	}
 	return res.ErrCode, res.Recordresult, nil
 }
-
 
 /**
   @查询请假状态
@@ -1295,7 +1295,7 @@ func Queryonjob(offset, size int) (int, bool, int, []string, error) {
 
 /**
   推送text类型信息
- */
+*/
 func PushTextMsg(accessToken, userId string, note []string) (int, error) {
 	if len(userId) == 0 {
 		return -1001, errors.New("userId empty")
@@ -1307,10 +1307,10 @@ func PushTextMsg(accessToken, userId string, note []string) (int, error) {
 		return -1003, errors.New("accessToken empty")
 	}
 	/*
-	token, err := getAccessToken()
-	if err != nil {
-		return -1001, err
-	}
+		token, err := getAccessToken()
+		if err != nil {
+			return -1001, err
+		}
 	*/
 	var apiUrl = PushUrl + "/asyncsend_v2?access_token=" + accessToken
 
@@ -1320,9 +1320,9 @@ func PushTextMsg(accessToken, userId string, note []string) (int, error) {
 	data["userid_list"] = userId
 
 	type Msg struct {
-		MsgType   string   `json:"msgtype"`
-		Text      struct {
-			Content  string  `json:"content"`
+		MsgType string `json:"msgtype"`
+		Text    struct {
+			Content string `json:"content"`
 		} `json:"text"`
 	}
 
@@ -1342,8 +1342,8 @@ func PushTextMsg(accessToken, userId string, note []string) (int, error) {
 }
 
 /**
- 推送oa类型信息
- */
+推送oa类型信息
+*/
 func PushOaMsg(userId string, note []string) (int, error) {
 	if len(userId) == 0 {
 		return -1001, errors.New("userId empty")
@@ -1366,21 +1366,21 @@ func PushOaMsg(userId string, note []string) (int, error) {
 	data["userid_list"] = userId //"171802165236043309"
 
 	type Form struct {
-		Key    string   `json:"key"`
-		Value  string   `json:"value"`
+		Key   string `json:"key"`
+		Value string `json:"value"`
 	}
 
 	type Msg struct {
-		MsgType   string   `json:"msgtype"`
-		Oa  struct {
-			MessageUrl   string   `json:"message_url"`
-			Head         struct {
-				BgColor  string   `json:"bgcolor"`
-				Text     string   `json:"text"`
-			}   `json:"head"`
-			Body  struct {
-				Title    string   `json:"title"`
-				Form     []Form  `json:"form"`
+		MsgType string `json:"msgtype"`
+		Oa      struct {
+			MessageUrl string `json:"message_url"`
+			Head       struct {
+				BgColor string `json:"bgcolor"`
+				Text    string `json:"text"`
+			} `json:"head"`
+			Body struct {
+				Title string `json:"title"`
+				Form  []Form `json:"form"`
 			} `json:"body"`
 		} `json:"oa"`
 	}
@@ -1391,14 +1391,14 @@ func PushOaMsg(userId string, note []string) (int, error) {
 	msg.Oa.Body.Title = "工资明细"
 
 	/*
-	var form1 Form
-	form1.Key = "正常工资: "
-	form1.Value = "3000"
+		var form1 Form
+		form1.Key = "正常工资: "
+		form1.Value = "3000"
 
-	var form2 Form
-	form2.Key = "奖金: "
-	form2.Value = "1000"
-	 */
+		var form2 Form
+		form2.Key = "奖金: "
+		form2.Value = "1000"
+	*/
 	for _, n := range note {
 		var tmp Form
 		tmp.Key = n
@@ -1511,6 +1511,71 @@ func UpdateCallback(tags []string) (int, error) {
 		return -1003, errors.New(res.Errmsg)
 	}
 	return 0, nil
+}
+
+/**
+ * 同步列表
+ */
+func SyncProcessinstance(processCode string, startTime uint64, cursor int64) {
+	endTime := uint64(time.Now().Unix())
+	processinstanceStartKey := "processinstance_starttime"
+	cacheStartTime, ok := cacheSyncMap.Load(processinstanceStartKey)
+	if !ok || cacheStartTime == nil {  // 第一次使用配置的时间
+		endTime = startTime + 3600*1000  // 第一次查询时间间隔
+	} else {
+		startTime = cacheStartTime.(uint64)
+	}
+
+	res, err := ProcessinstanceList(processCode, startTime, endTime, 10, cursor)
+	if err != nil {
+		fmt.Println(err.Error())
+		Logger.Error(fmt.Sprintf("ProcessinstanceList starttime:%d, endTime:%d, cursor:%d, error:%s", startTime, endTime, cursor, err.Error()))
+	} else {
+		cursor = res.Result.NextCursor
+		for _, v := range res.Result.List {
+			insertOvertimneToHrV2(v)
+		}
+
+		if cursor > 0 {
+			SyncProcessinstance(processCode, startTime, cursor)
+		} else {
+			cacheSyncMap.Store(processinstanceStartKey, endTime)
+		}
+	}
+}
+
+/**
+ * 获取审批列表
+ */
+func ProcessinstanceList(processCode string, startTime uint64, endTime uint64, size, cursor int64) (models.ProcessInstanceListStruct, error) {
+	var respData models.ProcessInstanceListStruct
+	token, err := getAccessToken()
+	if err != nil {
+		return respData, err
+	}
+	url := fmt.Sprintf("%s/listids?access_token=%s", ProcessUrl, token)
+	fmt.Println(url)
+
+	data := make(map[string]interface{})
+	data["process_code"] = processCode
+	data["start_time"] = startTime
+	data["end_time"] = endTime
+	data["size"] = size
+	data["cursor"] = cursor
+
+	dataStr, _ := json.Marshal(data)
+	fmt.Println(string(dataStr))
+	body, err := method.HttpPostJson(url, dataStr)
+	if err != nil {
+		fmt.Println(err.Error())
+		return respData, err
+	}
+	fmt.Println(string(body))
+	_ = json.Unmarshal(body, &respData)
+	if respData.Errcode != 0 {
+		return respData, errors.New(respData.ErrMsg)
+	}
+	return respData, nil
 }
 
 /**
