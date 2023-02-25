@@ -10,5 +10,5 @@ require (
 	github.com/json-iterator/go v1.1.9
 	github.com/mattn/go-adodb v0.0.1
 	github.com/robfig/cron v1.2.0
-	golang.org/x/net v0.0.0-20200320220750-118fecf932d8 // indirect
+	golang.org/x/net v0.7.0 // indirect
 )
